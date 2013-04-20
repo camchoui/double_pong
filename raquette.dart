@@ -13,12 +13,14 @@ class Raquette {
 
   bool rightDown = false;
   bool leftDown = false;
+  bool upUp = false;
+  bool downUp = false;
 
   Raquette(this.board, this.x, this.y, this.w, this.h, {this.horizontal:true}) {
     draw();
-    document.onKeyDown.listen(onKeyDown);
-    document.onKeyUp.listen(onKeyUp);
-    document.onMouseMove.listen(onMouseMove);
+    //document.onKeyDown.listen(onKeyDown);
+    //document.onKeyUp.listen(onKeyUp);
+    document.onMouseMove.listen(onMouseMove); 
   }
 
   void draw() {
@@ -28,7 +30,7 @@ class Raquette {
     board.context.fill();
   }
 
-  // Set rightDown or leftDown if the right or left keys are down.
+  /* // Set rightDown or leftDown if the right or left keys are down.
   void onKeyDown(event) {
     if (event.keyCode == 39) {
       rightDown = true;
@@ -36,7 +38,22 @@ class Raquette {
       leftDown = true;
     }
   }
-
+  // Set upUp or downUp if the up or down keys are down.
+  void onKeyDown1(event) {
+    if (event.keyCode == 40) {
+      upUp = true;
+    } else if (event.keyCode == 38) {
+      downUp = true;
+    }
+  }
+  // Unset upUp or downUp when the up or down key is released.
+  void onKeyUp1(event) {
+    if (event.keyCode == 40) {
+      upUp = false;
+    } else if (event.keyCode == 38) {
+      downUp = false;
+    }
+  }
   // Unset rightDown or leftDown when the right or left key is released.
   void onKeyUp(event) {
     if (event.keyCode == 39) {
@@ -45,7 +62,7 @@ class Raquette {
       leftDown = false;
     }
   }
-
+  */
   void onMouseMove(event) {
     if (horizontal) {
       // Change a position of a racket with the mouse left or right mouvement.

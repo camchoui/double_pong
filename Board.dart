@@ -43,7 +43,12 @@ class Board {
     startBalle1Y = height / 2;
     startBalle2X = width / 4;
     startBalle2Y = height / 4;
-    document.query('#jouez').onClick.listen((e) {
+    context.fillStyle = '#0000ff'; // blue
+    context.moveTo(200, 250);//épaisseur de la ligne
+    context.lineWidth = 8;//
+    context.strokeStyle = '#ff0000'; // red
+    context.stroke();//
+    document.query('#jouer').onClick.listen((e) {
       init();
     });
   }
@@ -59,7 +64,6 @@ class Board {
         new Raquette(this, width/2, Y, RAQUETTE_W, RAQUETTE_H);
     raquetteSouth =
         new Raquette(this, width/2, height-RAQUETTE_H, RAQUETTE_W, RAQUETTE_H);
-
     balle2 = new Balle2(this, startBalle2X, startBalle2Y, BALLE2_R);
     raquetteWest =
         new Raquette(this, X, height/2, RAQUETTE_H, RAQUETTE_W, horizontal:false);
@@ -88,8 +92,21 @@ class Board {
 
     balle1.draw();
     balle2.draw();
-
+    
+    // Move the east side racket if the up or the down key is currently pressed.
+    if (raquetteEast.upUp) {
+      raquetteEast.y += 5;
+    } else if (raquetteEast.downUp) {
+      raquetteEast.y -= 5;
+    }    
     raquetteEast.draw();
+    
+    // Move the west side racket if the up or the down key is currently pressed.
+    if (raquetteWest.upUp) {
+      raquetteWest.y += 5;
+    } else if (raquetteWest.downUp) {
+      raquetteWest.y -= 5;
+    }    
     raquetteWest.draw();
 
     // Move the north side racket if the left or the right key is currently pressed.
@@ -110,8 +127,8 @@ class Board {
 
 
     // The ball must stay within the west and east sides.
-    if (balle1.x + d1x > width || balle1.x + d1x < 0) d1x = -d1x;
-    if (balle2.x + d2x > width || balle2.x + d2x < 0) d2x = -d2x;
+   //if (balle1.x + d1x > width || balle1.x + d1x < 0) d1x = -d1x;
+   // if (balle2.x + d2x > width || balle2.x + d2x < 0) d2x = -d2x;
 
     // The north side.
     if (balle1.y + d1y < 0) {
@@ -130,7 +147,41 @@ class Board {
         //timer.cancel();
       }
     }
+    // The West side.
+    if (balle1.x + d1x < 0) {
+      if (balle1.y > raquetteWest.y && balle1.y < raquetteWest.y + raquetteWest.h) {
+        d1x = -d1x;
+      } else {
+        // The ball hit the west side but outside the racket - game over, so stop the animation.
+        //timer.cancel();
+      }
+    }
+    if (balle2.x + d2x < 0) {
+      if (balle2.y > raquetteWest.x && balle2.y < raquetteWest.y + raquetteWest.h) {
+        d2x = -d2x;
+      } else {
+        // The ball hit the west side but outside the racket - game over, so stop the animation.
+        //timer.cancel();
+      }
+    }
 
+    // The East side.
+    if (balle1.x + d1x > width) {
+      if (balle1.y > raquetteEast.y && balle1.y < raquetteEast.y + raquetteEast.h) {
+        d1x = -d1x;
+      } else {
+        // The ball hit the east side but outside the racket - game over, so stop the animation.
+        //timer.cancel();
+      }
+    }
+   if (balle2.x + d2x > width) {
+      if (balle2.y > raquetteEast.y && balle2.y < raquetteEast.y + raquetteEast.h) {
+        d2x = -d2x;
+      } else {
+        // The ball hit the east side but outside the racket - game over, so stop the animation.
+        //timer.cancel();
+      }
+    }
     // The south side.
     if (balle1.y + d1y > height) {
       if (balle1.x > raquetteSouth.x && balle1.x < raquetteSouth.x + raquetteSouth.w) {
