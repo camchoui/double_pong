@@ -5,8 +5,8 @@ class Board {
 
   const num X = 0;
   const num Y = 0;
-  const num BALLE_R = 8;
-  const num BALLE_T = 15; 
+  const num BALLE1_R = 12;
+  const num BALLE2_R = 8;
   const num RAQUETTE_W = 75;
   const num RAQUETTE_H = 8;
 
@@ -17,21 +17,21 @@ class Board {
 
   num width;
   num height;
-  double startBalle1X;
-  double startBalle1Y;
-  double startBalle2X;
-  double startBalle2Y;
-  num d1x = 2;
-  num d1y = 4;
-  num d2x = 1;
-  num d2y = 3;
+  num startBalle1X;
+  num startBalle1Y;
+  num startBalle2X;
+  num startBalle2Y;
+  num d1x;
+  num d1y;
+  num d2x;
+  num d2y;
 
   Balle1 balle1;
   Balle2 balle2;
   Raquette raquetteNorth;
   Raquette raquetteSouth;
-  Raquette raquetteOuest;
-  Raquette raquetteEst;
+  Raquette raquetteWest;
+  Raquette raquetteEast;
 
   Board(this.canvas) {
     context = canvas.getContext("2d");
@@ -46,29 +46,37 @@ class Board {
     document.query('#jouez').onClick.listen((e) {
       init();
     });
-
   }
 
   void init() {
-    balle1 = new Balle1(this, startBalle1X, startBalle1Y, BALLE_R);
-    raquetteNorth = new Raquette(this, width/2, Y, RAQUETTE_W, RAQUETTE_H);
-    raquetteSouth = new Raquette(this, width/2, height-RAQUETTE_H, RAQUETTE_W, RAQUETTE_H);
+    d1x = 2;
+    d1y = 4;
+    d2x = 3;
+    d2y = 1;
 
-    balle2 = new Balle2(this, startBalle2X, startBalle2Y, BALLE_T);
-    raquetteOuest = new Raquette(this, X, height/2, RAQUETTE_H, RAQUETTE_W);
-    raquetteEst = new Raquette(this, width/2, height/2, RAQUETTE_H, RAQUETTE_W);
-    // redraw every 10 ms
+    balle1 = new Balle1(this, startBalle1X, startBalle1Y, BALLE1_R);
+    raquetteNorth =
+        new Raquette(this, width/2, Y, RAQUETTE_W, RAQUETTE_H);
+    raquetteSouth =
+        new Raquette(this, width/2, height-RAQUETTE_H, RAQUETTE_W, RAQUETTE_H);
+
+    balle2 = new Balle2(this, startBalle2X, startBalle2Y, BALLE2_R);
+    raquetteWest =
+        new Raquette(this, X, height/2, RAQUETTE_H, RAQUETTE_W, horizontal:false);
+    raquetteEast =
+        new Raquette(this, width-RAQUETTE_H, height/2, RAQUETTE_H, RAQUETTE_W, horizontal:false);
+    // redraw every 20 ms
     timer = new Timer.periodic(const Duration(milliseconds: 20),
         (t) => redraw());
   }
-  
+
   void border() {
     context.beginPath();
     context.rect(X, Y, width, height);
     context.closePath();
     context.stroke();
   }
-  
+
 
   void clear() {
     context.clearRect(X, Y, width, height);
@@ -80,9 +88,9 @@ class Board {
 
     balle1.draw();
     balle2.draw();
-    
-    raquetteEst.draw();
-    raquetteOuest.draw();
+
+    raquetteEast.draw();
+    raquetteWest.draw();
 
     // Move the north side racket if the left or the right key is currently pressed.
     if (raquetteNorth.rightDown) {
@@ -99,11 +107,8 @@ class Board {
       raquetteSouth.x -= 5;
     }
     raquetteSouth.draw();
-    
-    
-    
-    
-   
+
+
     // The ball must stay within the west and east sides.
     if (balle1.x + d1x > width || balle1.x + d1x < 0) d1x = -d1x;
     if (balle2.x + d2x > width || balle2.x + d2x < 0) d2x = -d2x;
@@ -114,7 +119,7 @@ class Board {
         d1y = -d1y;
       } else {
         // The ball hit the north side but outside the racket - game over, so stop the animation.
-        timer.cancel();
+        //timer.cancel();
       }
     }
     if (balle2.y + d2y < 0) {
@@ -122,7 +127,7 @@ class Board {
         d2y = -d2y;
       } else {
         // The ball hit the north side but outside the racket - game over, so stop the animation.
-        timer.cancel();
+        //timer.cancel();
       }
     }
 
@@ -132,7 +137,7 @@ class Board {
         d1y = -d1y;
       } else {
         // The ball hit the south side but outside the racket - game over, so stop the animation.
-        timer.cancel();
+        //timer.cancel();
       }
     }
    if (balle2.y + d2y > height) {
@@ -140,10 +145,10 @@ class Board {
         d2y = -d2y;
       } else {
         // The ball hit the south side but outside the racket - game over, so stop the animation.
-        timer.cancel();
+        //timer.cancel();
       }
     }
-    
+
     balle1.x += d1x;
     balle1.y += d1y;
     balle2.x += d2x;

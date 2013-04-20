@@ -9,10 +9,12 @@ class Raquette {
   num w;
   num h;
 
+  bool horizontal;
+
   bool rightDown = false;
   bool leftDown = false;
 
-  Raquette(this.board, this.x, this.y, this.w, this.h) {
+  Raquette(this.board, this.x, this.y, this.w, this.h, {this.horizontal:true}) {
     draw();
     document.onKeyDown.listen(onKeyDown);
     document.onKeyUp.listen(onKeyUp);
@@ -44,13 +46,23 @@ class Raquette {
     }
   }
 
-  // Change a position of a racket with the mouse left or right mouvement.
   void onMouseMove(event) {
-    if (event.pageX > board.X && event.pageX < board.width) {
-      x = event.pageX - board.X - w/2;
-      if (x < board.X) x = board.X;
-      if (x > board.width - w) x = board.width - w;
+    if (horizontal) {
+      // Change a position of a racket with the mouse left or right mouvement.
+      if (event.pageX > board.X && event.pageX < board.width) {
+        x = event.pageX - board.X - w/2;
+        if (x < board.X) x = board.X;
+        if (x > board.width - w) x = board.width - w;
+      }
+    } else {
+      // Change a position of a racket with the mouse up or down mouvement.
+      if (event.pageY > board.Y && event.pageY < board.height) {
+        y = event.pageY - board.Y - h/2;
+        if (y < board.Y) y = board.Y;
+        if (y > board.height - h) y = board.height - h;
+      }
     }
+
   }
 
 }
