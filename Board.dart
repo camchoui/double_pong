@@ -7,7 +7,7 @@ class Board {
   const num Y = 0;
   const num BALLE1_R = 12;
   const num BALLE2_R = 8;
-  const num RAQUETTE_W = 75;
+  const num RAQUETTE_W = 100;
   const num RAQUETTE_H = 8;
 
   Timer timer;
@@ -38,15 +38,16 @@ class Board {
     width = canvas.width;
     height = canvas.height;
     border();
-
+  
     startBalle1X = width / 2;
     startBalle1Y = height / 2;
     startBalle2X = width / 4;
     startBalle2Y = height / 4;
-    context.fillStyle = '#0000ff'; // blue
-    context.moveTo(200, 250);//épaisseur de la ligne
+    
+    context.fillStyle = 'purple'; // mauve
+    context.moveTo(200, 250); //épaisseur de la ligne
     context.lineWidth = 8;//
-    context.strokeStyle = '#ff0000'; // red
+    context.strokeStyle = 'pink'; // rose
     context.stroke();//
     document.query('#jouer').onClick.listen((e) {
       init();
@@ -125,26 +126,27 @@ class Board {
     }
     raquetteSouth.draw();
 
-
-    // The ball must stay within the west and east sides.
-   //if (balle1.x + d1x > width || balle1.x + d1x < 0) d1x = -d1x;
-   // if (balle2.x + d2x > width || balle2.x + d2x < 0) d2x = -d2x;
-
     // The north side.
     if (balle1.y + d1y < 0) {
       if (balle1.x > raquetteNorth.x && balle1.x < raquetteNorth.x + raquetteNorth.w) {
         d1y = -d1y;
       } else {
-        // The ball hit the north side but outside the racket - game over, so stop the animation.
-        //timer.cancel();
+        //The ball hit the north side but outside the racket - game over, so stop the animation.
+        timer.cancel();
+        context.font = '20pt Cambria';
+        context.fillStyle = 'purple';
+        context.fillText('Ooops le jeu est Terminé!', 100, 100);
       }
     }
     if (balle2.y + d2y < 0) {
       if (balle2.x > raquetteNorth.x && balle2.x < raquetteNorth.x + raquetteNorth.w) {
         d2y = -d2y;
       } else {
-        // The ball hit the north side but outside the racket - game over, so stop the animation.
-        //timer.cancel();
+       // The ball hit the north side but outside the racket - game over, so stop the animation.
+        timer.cancel();
+        context.font = '20pt Cambria';
+        context.fillStyle = 'purple';
+        context.fillText('Ooops le jeu est Terminé!', 100, 100);
       }
     }
     // The West side.
@@ -152,16 +154,22 @@ class Board {
       if (balle1.y > raquetteWest.y && balle1.y < raquetteWest.y + raquetteWest.h) {
         d1x = -d1x;
       } else {
-        // The ball hit the west side but outside the racket - game over, so stop the animation.
-        //timer.cancel();
+        //The ball hit the west side but outside the racket - game over, so stop the animation.
+        timer.cancel();
+        context.font = '20pt Cambria';
+        context.fillStyle = 'purple';
+        context.fillText('Ooops le jeu est Terminé!', 100, 100);
       }
     }
     if (balle2.x + d2x < 0) {
       if (balle2.y > raquetteWest.x && balle2.y < raquetteWest.y + raquetteWest.h) {
         d2x = -d2x;
       } else {
-        // The ball hit the west side but outside the racket - game over, so stop the animation.
-        //timer.cancel();
+        //The ball hit the west side but outside the racket - game over, so stop the animation.
+        timer.cancel();
+        context.font = '20pt Cambria';
+        context.fillStyle = 'purple';
+        context.fillText('Ooops le jeu est Terminé!', 100, 100);
       }
     }
 
@@ -171,7 +179,10 @@ class Board {
         d1x = -d1x;
       } else {
         // The ball hit the east side but outside the racket - game over, so stop the animation.
-        //timer.cancel();
+        timer.cancel();
+        context.font = '20pt Cambria';
+        context.fillStyle = 'purple';
+        context.fillText('Ooops le jeu est Terminé!', 100, 100);
       }
     }
    if (balle2.x + d2x > width) {
@@ -179,7 +190,10 @@ class Board {
         d2x = -d2x;
       } else {
         // The ball hit the east side but outside the racket - game over, so stop the animation.
-        //timer.cancel();
+        timer.cancel();
+        context.font = '20pt Cambria';
+        context.fillStyle = 'purple';
+        context.fillText('Ooops le jeu est Terminé!', 100, 100);
       }
     }
     // The south side.
@@ -188,7 +202,10 @@ class Board {
         d1y = -d1y;
       } else {
         // The ball hit the south side but outside the racket - game over, so stop the animation.
-        //timer.cancel();
+        timer.cancel();
+        context.font = '20pt Cambria';
+        context.fillStyle = 'purple';
+        context.fillText('Ooops le jeu est Terminé!', 100, 100);
       }
     }
    if (balle2.y + d2y > height) {
@@ -196,7 +213,10 @@ class Board {
         d2y = -d2y;
       } else {
         // The ball hit the south side but outside the racket - game over, so stop the animation.
-        //timer.cancel();
+        timer.cancel();
+        context.font = '20pt Cambria';
+        context.fillStyle = 'purple';
+        context.fillText('Ooops le jeu est Terminé!', 100, 100);
       }
     }
 

@@ -16,7 +16,7 @@ class Balle1 {
     board.context.beginPath();
     board.context.arc(x, y, r, 0, PI*2, true);
     board.context.closePath();
-    board.context.fill();
+    board.context.fill ();
   }
 
 }

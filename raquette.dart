@@ -18,8 +18,10 @@ class Raquette {
 
   Raquette(this.board, this.x, this.y, this.w, this.h, {this.horizontal:true}) {
     draw();
-    //document.onKeyDown.listen(onKeyDown);
-    //document.onKeyUp.listen(onKeyUp);
+    document.onKeyDown.listen(onKeyDown);
+    document.onKeyUp.listen(onKeyUp);
+    document.onKeyDown.listen(onKeyDown1);
+    document.onKeyUp.listen(onKeyUp1);
     document.onMouseMove.listen(onMouseMove); 
   }
 
@@ -30,7 +32,7 @@ class Raquette {
     board.context.fill();
   }
 
-  /* // Set rightDown or leftDown if the right or left keys are down.
+   // Set rightDown or leftDown if the right or left keys are down.
   void onKeyDown(event) {
     if (event.keyCode == 39) {
       rightDown = true;
@@ -62,7 +64,7 @@ class Raquette {
       leftDown = false;
     }
   }
-  */
+  
   void onMouseMove(event) {
     if (horizontal) {
       // Change a position of a racket with the mouse left or right mouvement.
